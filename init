@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Created by paincompiler on 2017/08/23
+# © 2017 PAINCOMPILER All RIGHTS RESERVED.
+
+##########settings##########
+set -o errexit
+set -o errtrace
+# set -o nounset
+set -o pipefail
+# set -o xtrace
+##########settings##########
+
+function finish {
+    # cleanup code here
+    echo "cleaning up"
+}
+
+trap finish EXIT
+
+# script here
+
+echo -n "Enter your working email ($(git config --global user.email)): "
+read EMAIL 
+if ! [[ $EMAIL =~ '(.+)@(.+)' ]] ; then
+    echo -n "${EMAIL} is not in illegal email format"
+    exit 1
+fi
