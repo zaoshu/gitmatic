@@ -1,6 +1,6 @@
 # Gitmatic 
 
-A pragmatic engineering toolset built upon the [git methodology](./).
+A pragmatic git engineering toolset built upon the [git methodology](https://paincompiler.github.io/GiThodology/).
 
 ## Install  
 
@@ -10,7 +10,16 @@ Run:
 ./install
 ```
 
+It will do: 
+
+1. copy the `templates` folder which including git message\GitHub pull request and issue templates to your local/etc
+2. copy toolsets related scripts to your local/bin
+3. install [gitflow](https://github.com/nvie/gitflow). (optional)
+
 ## Usage
+
+
+Go to your local repository then run:
 
 ```bash
 gitmatic init
