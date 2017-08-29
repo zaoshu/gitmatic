@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Created by paincompiler on 2017/08/29
+# © 2017 PAINCOMPILER All RIGHTS RESERVED.
+
+##########settings##########
+set -o errexit
+set -o errtrace
+set -o pipefail
+# set -o xtrace
+##########settings##########
+
+function finish {
+    # cleanup code here
+	echo "exit"
+}
+
+pushd `dirname $0` > /dev/null
+this_script=`pwd -P`
+popd > /dev/null
+
+PROGRAM_NAME=$(basename $0)
+
+function sub_help {
+    echo "Usage: ${PROGRAM_NAME} <subcommand> [options]"
+    echo "Subcommands:"
+    echo "	init	setup the local repository via a guide"
+    echo ""
+    echo "For help with each subcommand run:"
+    echo "${PROGRAM_NAME} <subcommand> -h|--help"
+    echo ""
+}
+
+function sub_init {
+	${this_script}/gitmatic_init		
+}
+
+trap finish EXIT
+
+# script here
+
+subcommand=$1
+case $subcommand in
+    "" | "-h" | "--help")
+        sub_help
+        ;;
+    *)
+        shift
+        sub_${subcommand} $@
+        if [ $? = 127 ]; then
+            echo "Error: '$subcommand' is not a known subcommand." >&2
+            echo "       Run '${PROGRAM_NAME} --help' for a list of known subcommands." >&2
+            exit 1
+        fi
+        ;;
+esac

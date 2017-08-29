@@ -1,12 +1,32 @@
-# <type>: (If applied, this commit will...) <subject> (Max 50 char)
+# <type>: <subject> (Max 50 char)
+# exam.
+#   fix: init failed on multiple hidden layers creation
 # |<----  Using a Maximum Of 50 Characters  ---->|
 
-
-# Explain why this change is being made
+# <context>
+# Provide detail about this change including:
+#   1. what 2. why 3. side-effect
+# ATTENTION: do not explain how, the code itself does it.
 # |<----   Try To Limit Each Line to a Maximum Of 72 Characters   ---->|
 
+
+# <reference source> <reference content>
 # Provide links or keys to any relevant tickets, articles or other resources
-# Example: Github issue #23
+# Example: 
+#
+#   Github issue resolve #23
+#
+#   Issue #23 on GitHub will be set to resolved automatically when PR with
+#   this commit included being merged into default branches.
+#   Read more: http://bit.ly/ghgmkw
+#
+#
+#   JIRA ZAOS-132 #done fix this by some workaround tricks
+#
+#   The issue whose key is ZAOS-132 on JIRA will start the 'done' transistion
+#   in workflow and comment with content "fix this by some workaround tricks".
+#   Read more: http://bit.ly/jirasgm
+
 
 # --- COMMIT END ---
 # Type can be 
@@ -26,5 +46,5 @@
 #    Use the body to explain what and why vs. how
 #    Can use multiple lines with "-" for bullet points in body
 # --------------------
-# For more information about this template, check out
+# Modified by PainCompiler. The original:
 # https://gist.github.com/adeekshith/cd4c95a064977cdc6c50

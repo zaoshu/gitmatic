@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Created by paincompiler on 2017/08/29
+# © 2017 PAINCOMPILER All RIGHTS RESERVED.
+
+##########settings##########
+set -o errexit
+set -o errtrace
+# set -o nounset
+set -o pipefail
+# set -o xtrace
+##########settings##########
+
+function finish {
+    # cleanup code here
+    echo "exit"
+}
+
+function copy_templates {
+    echo "============copy templates============"
+    templates_path="/usr/local/etc/gitmatic/templates/"
+    mkdir -p ${templates_path}
+    echo "./templates ---------------> /usr/local/etc/gitmatic/templates"
+    cp -R ./templates/* ${templates_path} 
+    echo ""
+}
+
+function copy_script {
+    echo "============copy script============"
+    echo "./gitmatic ---------------> /usr/local/bin/gitmatic"
+	cp ./gitmatic  /usr/local/bin/
+    echo "./init ---------------> /usr/local/bin/gitmatic_init"
+	cp ./init /usr/local/bin/gitmatic_init
+    echo ""
+}
+
+trap finish EXIT
+
+
+# copy templates to etc
+copy_templates
+copy_script
+echo "installation done"

@@ -3,25 +3,72 @@
 # © 2017 PAINCOMPILER All RIGHTS RESERVED.
 
 ##########settings##########
-set -o errexit
+# set -o errexit
 set -o errtrace
 # set -o nounset
 set -o pipefail
 # set -o xtrace
 ##########settings##########
 
-function finish {
-    # cleanup code here
-    echo "cleaning up"
+pushd `dirname $0` > /dev/null
+this_script=`pwd -P`
+popd > /dev/null
+
+lang=$(locale | grep LANG | cut -d\" -f2 | cut -d= -f2 | cut -d_ -f1)
+
+function set_git_working_email {
+	read -p "Enter your working email ($(git config --global user.email)): " email 
+	if [[ ${email} = "" ]] ; then
+		email=$(git config --global user.email) 
+	fi
+
+	git config user.email ${email} 
 }
 
-trap finish EXIT
+
+function set_git_message_template {
+	git config commit.template /usr/local/etc/gitmatic/templates/gitmessage-${lang}-full
+}
+
+function set_github_templates {
+	echo "set github templates"
+}
+
+function install_gitflow {
+	unameOut="$(uname -s)"
+	case "${unameOut}" in
+		Linux* | Darwin*)	
+			curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
+			chmod +x gitflow-installer.sh
+			echo "sudo required for the installation"
+			sudo ./gitflow-installer.sh
+			echo "The gitflow has been installed on your ${unameOut}"
+            sudo rm -rf ./gitflow-installer.sh ./gitflow
+			;;
+		*)          
+			machine="${unameOut}"
+			echo "Emmm, you are in a ${machine}, please go to https://github.com/nvie/gitflow/wiki/Installation see more install options"
+	esac
+}
+
 
 # script here
 
-echo -n "Enter your working email ($(git config --global user.email)): "
-read EMAIL 
-if ! [[ $EMAIL =~ '(.+)@(.+)' ]] ; then
-    echo -n "${EMAIL} is not in illegal email format"
-    exit 1
+# set working email for lcoal repository
+set_git_working_email
+
+# set git message and github PR/Issues templates
+set_git_message_template
+# set_github_templates
+
+# git flow 
+echo -n "Do you want to install gitflow extensions? (more about gitflow: https://github.com/nvie/gitflow)"
+read -p "(Y/N): " reply
+if [[ $reply =~ ^[Yy]$ ]]; then
+	install_gitflow
+	echo -n "Do you want to initialize git flow in current repository?" 
+	read -p "(Y/N): " reply
+	if [[ $reply =~ ^[Yy]$ ]]; then
+        git flow init
+	fi
 fi
