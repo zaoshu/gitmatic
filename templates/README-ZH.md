@@ -31,7 +31,6 @@ $ vim <your-repo-path>/.git/config
     template = /usr/local/etc/gitmatic/templates/gitmessage-zh
 ```
 
-3. Head back to your repository and type  `git commit -a`, and you shall see the new templates:
 3. 回到你的代码仓库通过 `git commit -a` 提交 commit，你便可以看到新的模版已经生效:
 
 ```bash
